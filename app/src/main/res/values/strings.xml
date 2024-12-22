@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">StudentsApp</string>
+
+    <string name="add_student">Add New Student</string>
+    <string name="edit_student">Edit Student</string>
+    <string name="delete_student">Delete Student</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="student_picture">Student Picture</string>
+    <string name="student_name">Name</string>
+    <string name="student_id">Student ID</string>
+    <string name="student_checked">Checked</string>
+
+    <string name="students_list">Students List</string>
+    <string name="new_student">New Student</string>
+    <string name="student_details">Student Details</string>
+    <string name="edit_student_details">Edit Student</string>
+    <string name="title_activity_new_student">NewStudentActivity</string>
 </resources>
