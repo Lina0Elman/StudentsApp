@@ -17,4 +17,6 @@
     <string name="student_details">Student Details</string>
     <string name="edit_student_details">Edit Student</string>
     <string name="title_activity_new_student">NewStudentActivity</string>
+    <string name="title_activity_student_details">StudentDetailsActivity</string>
+    <string name="title_activity_edit_student">EditStudentActivity</string>
 </resources>

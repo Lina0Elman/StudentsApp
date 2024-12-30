@@ -1,10 +1,12 @@
-package com.example.studentsapp
+package com.example.studentsapp.activities
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.studentsapp.R
+import com.example.studentsapp.adapter.StudentAdapter
 import com.example.studentsapp.repository.StudentRepository
 
 class StudentsListActivity : AppCompatActivity() {

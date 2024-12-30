@@ -1,4 +1,4 @@
-package com.example.studentsapp
+package com.example.studentsapp.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,10 +7,11 @@ import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.studentsapp.R
 import com.example.studentsapp.model.Student
 
 class StudentAdapter(
-    private val students: List<Student>,
+    private val students: MutableList<Student>,
     private val onItemClicked: (Student, Int) -> Unit
 ) : RecyclerView.Adapter<StudentAdapter.StudentViewHolder>() {
 
@@ -25,18 +26,25 @@ class StudentAdapter(
         holder.name.text = student.name
         holder.id.text = student.id
         holder.picture.setImageResource(student.picture)
+
+        holder.checkBox.setOnCheckedChangeListener(null)
         holder.checkBox.isChecked = student.isChecked
+        holder.checkBox.setOnCheckedChangeListener { _, isChecked ->
+            student.isChecked = isChecked
+        }
 
         holder.itemView.setOnClickListener {
             onItemClicked(student, position)
         }
-
-        holder.checkBox.setOnCheckedChangeListener { _, isChecked ->
-            student.isChecked = isChecked
-        }
     }
 
     override fun getItemCount(): Int = students.size
+
+    fun updateStudents(newStudents: List<Student>) {
+        students.clear()
+        students.addAll(newStudents)
+        notifyDataSetChanged()
+    }
 
     class StudentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.studentName)

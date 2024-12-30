@@ -1,10 +1,11 @@
-package com.example.studentsapp
+package com.example.studentsapp.activities
 
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.studentsapp.R
 import com.example.studentsapp.model.Student
 import com.example.studentsapp.repository.StudentRepository
 

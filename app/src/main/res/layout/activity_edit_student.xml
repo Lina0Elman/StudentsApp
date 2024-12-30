@@ -5,22 +5,29 @@
     android:padding="16dp">
 
     <EditText
-        android:id="@+id/inputName"
+        android:id="@+id/editName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Student Name"
+        android:hint="Edit Student Name"
         android:minHeight="48dp" />
 
     <EditText
-        android:id="@+id/inputId"
+        android:id="@+id/editId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Student ID"
+        android:hint="Edit Student ID"
         android:minHeight="48dp" />
 
     <Button
-        android:id="@+id/saveButton"
+        android:id="@+id/updateButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save" />
+        android:text="Update" />
+
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:backgroundTint="#FF0000" />
 </LinearLayout>

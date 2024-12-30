@@ -1,47 +1,46 @@
 package com.example.studentsapp
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.studentsapp.ui.theme.StudentsAppTheme
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.studentsapp.activities.NewStudentActivity
+import com.example.studentsapp.activities.StudentDetailsActivity
+import com.example.studentsapp.adapter.StudentAdapter
+import com.example.studentsapp.repository.StudentRepository
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
+    private lateinit var adapter: StudentAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            StudentsAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+        setContentView(R.layout.activity_main)
+
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        val students = StudentRepository.getStudents()
+        Log.d("MainActivity", "Students: $students") // Check if students list is populated
+
+        adapter = StudentAdapter(students) { student, position ->
+            val intent = Intent(this, StudentDetailsActivity::class.java)
+            intent.putExtra("STUDENT_INDEX", position)
+            startActivity(intent)
+        }
+        recyclerView.adapter = adapter
+
+        val fab: FloatingActionButton = findViewById(R.id.fab_add_student)
+        fab.setOnClickListener {
+            val intent = Intent(this, NewStudentActivity::class.java)
+            startActivity(intent)
         }
     }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    StudentsAppTheme {
-        Greeting("Android")
+    override fun onResume() {
+        super.onResume()
+        adapter.updateStudents(StudentRepository.getStudents())
     }
 }
