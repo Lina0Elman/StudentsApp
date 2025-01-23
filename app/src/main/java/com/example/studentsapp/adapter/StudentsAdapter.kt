@@ -4,13 +4,15 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentsapp.R
 
 class StudentsAdapter(
     private var students: List<Student>,
     private val onItemClick: (Student) -> Unit,
-    private val onCheckChanged: (Student) -> Unit
+    private val onCheckChanged: (Student) -> Unit,
+    private val onIdChanged: (studentId: String) -> Unit
 ) : RecyclerView.Adapter<StudentsAdapter.StudentViewHolder>() {
 
     class StudentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -34,6 +36,9 @@ class StudentsAdapter(
         holder.imageView.setImageResource(R.drawable.student_pic)
 
         holder.itemView.setOnClickListener { onItemClick(student) }
+        holder.idText.doOnTextChanged { text, _, _, _ ->
+            onIdChanged(text.toString())
+        }
         holder.checkBox.setOnClickListener { onCheckChanged(student) }
     }
 

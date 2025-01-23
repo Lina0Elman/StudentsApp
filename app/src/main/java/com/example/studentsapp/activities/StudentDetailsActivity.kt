@@ -1,5 +1,6 @@
 package com.example.studentsapp.activities
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -10,6 +11,7 @@ import com.example.studentsapp.R
 
 class StudentDetailsActivity : AppCompatActivity() {
     private var studentId: String? = null
+    private val REQUEST_CODE_EDIT = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +22,15 @@ class StudentDetailsActivity : AppCompatActivity() {
         findViewById<Button>(R.id.editButton).setOnClickListener {
             Intent(this, EditStudentActivity::class.java).apply {
                 putExtra("student_id", studentId)
-                startActivity(this)
+                startActivityForResult(this, REQUEST_CODE_EDIT)
+            }
+        }
+
+        findViewById<Button>(R.id.deleteButton).setOnClickListener {
+            studentId?.let {
+                StudentsRepository.delete(it)
+                setResult(Activity.RESULT_OK)
+                finish()
             }
         }
     }
@@ -41,6 +51,14 @@ class StudentDetailsActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.studentAddress).text = "Address: ${it.address}"
             findViewById<TextView>(R.id.studentStatus).text =
                 "Status: ${if (it.isChecked) "Checked" else "Not checked"}"
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_EDIT && resultCode == Activity.RESULT_OK) {
+            studentId = data?.getStringExtra("updated_student_id")
+            updateStudentDetails()
         }
     }
 }

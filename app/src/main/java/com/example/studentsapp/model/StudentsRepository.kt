@@ -9,8 +9,8 @@ object StudentsRepository {
         students.add(student)
     }
 
-    fun update(student: Student) {
-        val index = students.indexOfFirst { it.id == student.id }
+    fun update(student: Student, originalId: String?) {
+        val index = students.indexOfFirst { it.id == originalId }
         if (index != -1) {
             students[index] = student
         }

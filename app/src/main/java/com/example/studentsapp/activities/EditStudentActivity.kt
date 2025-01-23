@@ -1,6 +1,8 @@
 package com.example.studentsapp.activities
 
 import Student
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
@@ -43,8 +45,12 @@ class EditStudentActivity : AppCompatActivity() {
                         newPhone,
                         newAddress
                     )
-                    StudentsRepository.update(updatedStudent)
+                    StudentsRepository.update(updatedStudent, originalId)
                 }
+                val resultIntent = Intent().apply {
+                    putExtra("updated_student_id", newId)
+                }
+                setResult(Activity.RESULT_OK, resultIntent)
                 finish()
             }
         }
