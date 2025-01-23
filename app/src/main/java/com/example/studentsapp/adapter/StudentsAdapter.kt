@@ -45,7 +45,27 @@ class StudentsAdapter(
     override fun getItemCount() = students.size
 
     fun updateStudents(newStudents: List<Student>) {
+        val oldStudents = students
         students = newStudents
-        notifyDataSetChanged()
+
+        val oldSize = oldStudents.size
+        val newSize = newStudents.size
+
+        // Notify item changes
+        for (i in 0 until minOf(oldSize, newSize)) {
+            if (oldStudents[i] != newStudents[i]) {
+                notifyItemChanged(i)
+            }
+        }
+
+        // Notify item insertions
+        if (newSize > oldSize) {
+            notifyItemRangeInserted(oldSize, newSize - oldSize)
+        }
+
+        // Notify item removals
+        if (oldSize > newSize) {
+            notifyItemRangeRemoved(newSize, oldSize - newSize)
+        }
     }
 }

@@ -63,10 +63,17 @@
 
         <Button
             android:id="@+id/editButton"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Edit"
-            android:backgroundTint="@android:color/holo_blue_dark" />
+            android:layout_gravity="center"
+            android:text="Edit Student"/>
 
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Delete Student"
+            android:backgroundTint="@android:color/holo_red_light" />
     </LinearLayout>
 </ScrollView>
