@@ -4,13 +4,15 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentsapp.R
 
 class StudentsAdapter(
     private var students: List<Student>,
     private val onItemClick: (Student) -> Unit,
-    private val onCheckChanged: (Student) -> Unit
+    private val onCheckChanged: (Student) -> Unit,
+    private val onIdChanged: (studentId: String) -> Unit
 ) : RecyclerView.Adapter<StudentsAdapter.StudentViewHolder>() {
 
     class StudentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -34,13 +36,36 @@ class StudentsAdapter(
         holder.imageView.setImageResource(R.drawable.student_pic)
 
         holder.itemView.setOnClickListener { onItemClick(student) }
+        holder.idText.doOnTextChanged { text, _, _, _ ->
+            onIdChanged(text.toString())
+        }
         holder.checkBox.setOnClickListener { onCheckChanged(student) }
     }
 
     override fun getItemCount() = students.size
 
     fun updateStudents(newStudents: List<Student>) {
+        val oldStudents = students
         students = newStudents
-        notifyDataSetChanged()
+
+        val oldSize = oldStudents.size
+        val newSize = newStudents.size
+
+        // Notify item changes
+        for (i in 0 until minOf(oldSize, newSize)) {
+            if (oldStudents[i] != newStudents[i]) {
+                notifyItemChanged(i)
+            }
+        }
+
+        // Notify item insertions
+        if (newSize > oldSize) {
+            notifyItemRangeInserted(oldSize, newSize - oldSize)
+        }
+
+        // Notify item removals
+        if (oldSize > newSize) {
+            notifyItemRangeRemoved(newSize, oldSize - newSize)
+        }
     }
 }
